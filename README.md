@@ -5,7 +5,7 @@ A small pdf merging tool built upon [PDFsharp](http://www.pdfsharp.com/PDFsharp/
 - Merge 2 or more PDF documents into one PDF file.
 - More to come! 
 
-## Quick start
+## Quickstart guide
 * Download latest release [here](https://github.com/jpabeem/MergePDF/raw/master/releases/MergePDF-1.00.zip)
 * Unzip folder
 * Run MergePDF 
