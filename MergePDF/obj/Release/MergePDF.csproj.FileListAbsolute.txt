@@ -1,0 +1,16 @@
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\MergePDF.exe.config
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\MergePDF.exe
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\MergePDF.pdb
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\PdfSharp.Charting.dll
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\PdfSharp.dll
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\PdfSharp.xml
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\PdfSharp.Charting.xml
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\de\PdfSharp.resources.dll
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\bin\Release\de\PdfSharp.Charting.resources.dll
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.csprojResolveAssemblyReference.cache
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.Form1.resources
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.Properties.Resources.resources
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.csproj.GenerateResource.Cache
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.csproj.CoreCompileInputs.cache
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.exe
+C:\Users\Jeroen\source\repos\MergePDF\MergePDF\obj\Release\MergePDF.pdb
