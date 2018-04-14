@@ -6,7 +6,7 @@ A small pdf merging tool built upon [PDFsharp](http://www.pdfsharp.com/PDFsharp/
 - More to come! 
 
 ## Quick start
-* Download latest release
+* Download latest release [here](https://github.com/jpabeem/MergePDF/blob/master/releases/MergePDF-1.00.zip)
 * Unzip folder
 * Run MergePDF 
 
