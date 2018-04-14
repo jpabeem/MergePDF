@@ -1,8 +1,8 @@
 # MergePDF
-A small pdf merging tool built upon PdfSharp.
+A small pdf merging tool built upon [PDFsharp](http://www.pdfsharp.com/PDFsharp/index.php?option=com_content&task=view&id=12&Itemid=40).
 
 ## Features
-- Merge 2 or more PDF documents into one document.
+- Merge 2 or more PDF documents into one PDF file.
 - More to come! 
 
 ## Quick start
