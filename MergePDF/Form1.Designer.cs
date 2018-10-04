@@ -34,9 +34,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.lblMergeAmount = new System.Windows.Forms.Label();
             this.btnClearAll = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,32 +83,9 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "2",
-            "3",
-            "4"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 63);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(604, 21);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // lblMergeAmount
-            // 
-            this.lblMergeAmount.AutoSize = true;
-            this.lblMergeAmount.Location = new System.Drawing.Point(9, 47);
-            this.lblMergeAmount.Name = "lblMergeAmount";
-            this.lblMergeAmount.Size = new System.Drawing.Size(213, 13);
-            this.lblMergeAmount.TabIndex = 4;
-            this.lblMergeAmount.Text = "How many PDF files do you want to merge?";
             // 
             // btnClearAll
             // 
@@ -122,14 +98,20 @@
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(12, 36);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(604, 269);
+            this.panel1.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 481);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnClearAll);
-            this.Controls.Add(this.lblMergeAmount);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.richConsole);
             this.Controls.Add(this.btnMergePdf);
             this.Controls.Add(this.menuStrip1);
@@ -155,9 +137,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label lblMergeAmount;
         private System.Windows.Forms.Button btnClearAll;
+        private System.Windows.Forms.FlowLayoutPanel panel1;
     }
 }
 
