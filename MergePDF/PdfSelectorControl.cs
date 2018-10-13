@@ -48,7 +48,7 @@ namespace MergePDF
             Button button = new Button
             {
                 Location = new Point(10, 0),
-                Text = $"Browse {Index} file",
+                Text = $"Browse file {Index}",
                 Visible = true
             };
 
