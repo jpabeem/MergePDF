@@ -1,6 +1,7 @@
 ﻿using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ namespace MergePDF
 
         private Button addMoreFiles;
         private SaveOutputSelectorControl saveControl;
+        private string mergedPdfs;
 
         public Form1()
         {
@@ -24,6 +26,19 @@ namespace MergePDF
             richConsole.AppendText("Initialized MergePDF, ready to merge!\n");
 
             CreateInitialSelectors();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var pdfsToMerge = GetPdfs();
+            if (pdfsToMerge.Length <= 0) return;
+            if (string.Join(";", pdfsToMerge) == mergedPdfs) return;
+
+            if (MessageBox.Show("You have unmerged changes, are you sure you want to quit?", "Confirm exit",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void CreateInitialSelectors()
@@ -92,14 +107,8 @@ namespace MergePDF
                 return;
             }
 
-            var pdfs = panel1.Controls.Cast<object>()
-             .Where(x => x is PdfSelectorControl)
-             .Select(x => x as PdfSelectorControl)
-             .OrderBy(x => x.Index)
-             .Where(x => string.IsNullOrWhiteSpace(x.FileName) == false)
-             .Select(x => x.FileName);
-
-            if (pdfs == null || pdfs.Count() < 2)
+            var pdfs = GetPdfs();
+            if (pdfs == null || pdfs.Length < 2)
             {
                 MessageBox.Show("Please select at least two pdf files", "Merging error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -119,6 +128,7 @@ namespace MergePDF
                     outPdf.Save(outputLocation);
                 }
 
+                mergedPdfs = String.Join(";", pdfs);
                 richConsole.AppendText(string.Format("Merged successfully!\n"));
             }
             catch (Exception ex)
@@ -126,6 +136,17 @@ namespace MergePDF
                 MessageBox.Show("Uh-oh, something went wrong. Are you sure you have specified valid input and output paths?", "Merging error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 richConsole.AppendText(string.Format("Error: {0}\n", ex.Message));
             }
+        }
+
+        private string[] GetPdfs()
+        {
+            return panel1.Controls.Cast<object>()
+                .Where(x => x is PdfSelectorControl)
+                .Select(x => x as PdfSelectorControl)
+                .OrderBy(x => x.Index)
+                .Where(x => string.IsNullOrWhiteSpace(x.FileName) == false)
+                .Select(x => x.FileName)
+                .ToArray();
         }
 
         private void richConsole_TextChanged(object sender, EventArgs e)
