@@ -17,7 +17,11 @@ namespace MergePDF
         public Form1()
         {
             InitializeComponent();
+            this.DragEnter += new DragEventHandler(DragEnter_Handler);
+            this.DragDrop += new DragEventHandler(DragDrop_Handler);
         }
+
+       
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -37,6 +41,7 @@ namespace MergePDF
 
             var selector2 = new PdfSelectorControl(2);
             panel1.Controls.Add(selector2);
+            
 
             saveControl = new SaveOutputSelectorControl((val) => richConsole.AppendText(val));
             panel1.Controls.Add(saveControl);
@@ -150,5 +155,74 @@ namespace MergePDF
             CreateInitialSelectors();
             richConsole.Clear();
         }
+
+
+        #region Drag Handling
+
+        private void DragEnter_Handler(object sender, DragEventArgs e)
+        {
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) &&
+               ((string[])e.Data.GetData(DataFormats.FileDrop)).All(f => f.ToLower().Contains(".pdf")))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void DragDrop_Handler(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (string file in files)
+            {
+                FillOrAddFile(file);
+            }
+
+        }
+
+        private void FillOrAddFile(string file)
+        {
+            PdfSelectorControl lastEmptyPdfSelector = GetFirstEmptyPDFSelector();
+
+            if (lastEmptyPdfSelector == null)
+            {
+                AddMoreFiles_Click(null, null);
+                lastEmptyPdfSelector = GetFirstEmptyPDFSelector();
+            }
+
+            lastEmptyPdfSelector.SetFileName(file);
+        }
+
+        private PdfSelectorControl GetFirstEmptyPDFSelector()
+        { 
+            PdfSelectorControl result = null;
+
+            foreach (Control control in panel1.Controls)
+            {
+                if (control.GetType().Name.Equals("PdfSelectorControl"))
+                {
+                    result = (PdfSelectorControl)control;
+                    if (string.IsNullOrEmpty(result.FileName))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        result = null;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+
+        #endregion
+
     }
 }

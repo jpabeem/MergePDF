@@ -72,5 +72,11 @@ namespace MergePDF
 
             return button;
         }
+
+        internal void SetFileName(string filename)
+        {
+            FileName = filename;
+            textBox.Text = filename;
+        }
     }
 }
