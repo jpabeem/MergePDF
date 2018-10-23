@@ -37,9 +37,11 @@ namespace MergePDF
             panel1.WrapContents = false;
 
             var selector = new PdfSelectorControl(1);
+            selector.RemoveFile += Selector_RemoveFile;
             panel1.Controls.Add(selector);
 
             var selector2 = new PdfSelectorControl(2);
+            selector2.RemoveFile += Selector_RemoveFile;
             panel1.Controls.Add(selector2);
             
 
@@ -59,12 +61,45 @@ namespace MergePDF
             panel1.Controls.Add(addMoreFiles);
         }
 
+        private void Selector_RemoveFile(int index)
+        {
+            if (panel1.Controls.Count > 4)
+            {
+                var fileToRemove = panel1.Controls.Cast<object>().OfType<PdfSelectorControl>().FirstOrDefault(c => c.Index == index);
+                if (fileToRemove != null)
+                {
+                    //To remove focus from current control
+                    this.ActiveControl = null;
+                    panel1.Controls.Remove(fileToRemove);
+                    fileToRemove.RemoveFile -= Selector_RemoveFile;
+                    fileToRemove.Dispose();
+
+                    foreach (var selectorControl in panel1.Controls.Cast<object>().OfType<PdfSelectorControl>())
+                    {
+                        if (selectorControl.Index > index)
+                        {
+                            selectorControl.Index = selectorControl.Index - 1;
+                        }
+                    }
+
+                    //Adding again will make it stick to bottom
+                    panel1.Controls.Add(saveControl);
+                    panel1.Controls.Add(addMoreFiles);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Minimum of 2 pdf files required to perform merge operation", "Can't Remove File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void AddMoreFiles_Click(object sender, EventArgs e)
         {
             var selectorX = new PdfSelectorControl(panel1.Controls.Count - 1)
             {
                 Width = panel1.Width - 50
             };
+            selectorX.RemoveFile += Selector_RemoveFile;
 
             panel1.Controls.Add(selectorX);
 

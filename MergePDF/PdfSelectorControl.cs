@@ -1,15 +1,19 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MergePDF
 {
     public partial class PdfSelectorControl : UserControl
     {
-        private OpenFileDialog openFileDialog;
-        public string FileName { get; private set; }
-        public int Index { get; }
+        private int _index;
+        private Button button;
 
-        TextBox textBox;
+        private Button closeButton;
+        private readonly OpenFileDialog openFileDialog;
+
+        private TextBox textBox;
 
         public PdfSelectorControl(int index)
         {
@@ -24,12 +28,43 @@ namespace MergePDF
                 RestoreDirectory = true
             };
 
+            CreateTextbox();
+            CreateCloseButton();
+            CreateOpenButton();
+
             Index = index;
 
-            CreateTextbox();
-
             Controls.Add(textBox);
-            Controls.Add(CreateOpenButton());
+            Controls.Add(button);
+            Controls.Add(closeButton);
+        }
+
+        public string FileName { get; private set; }
+
+        public int Index
+        {
+            get => _index;
+            set
+            {
+                _index = value;
+                if (button != null)
+                    button.Text = $"Browse file {_index}";
+            }
+        }
+
+        public event Action<int> RemoveFile;
+
+        private void CreateCloseButton()
+        {
+            closeButton = new Button
+            {
+                Location = new Point(510, 0),
+                Text = "X",
+                Size = new Size(20, 20),
+                Visible = true
+            };
+
+            closeButton.Click += (sender, e) => { OnRemoveFile(Index); };
         }
 
         private void CreateTextbox()
@@ -37,18 +72,24 @@ namespace MergePDF
             textBox = new TextBox
             {
                 Location = new Point(126, 0),
-                Size = new Size(400, 20),
+                Size = new Size(380, 20),
                 Visible = true,
                 ReadOnly = true
             };
+
+            textBox.TextChanged += (sender, e) =>
+            {
+                if (closeButton != null)
+                    closeButton.Enabled = !string.IsNullOrWhiteSpace(textBox.Text);
+            };
         }
 
-        private Button CreateOpenButton()
+
+        private void CreateOpenButton()
         {
-            Button button = new Button
+            button = new Button
             {
                 Location = new Point(10, 0),
-                Text = $"Browse file {Index}",
                 Visible = true
             };
 
@@ -56,21 +97,23 @@ namespace MergePDF
             {
                 var dialog = openFileDialog;
                 if (dialog.ShowDialog() == DialogResult.OK)
-                {
                     try
                     {
-                        string fileName = dialog.FileName;
+                        var fileName = dialog.FileName;
                         textBox.Text = fileName;
                         FileName = fileName;
                     }
-                    catch (System.IO.IOException)
+                    catch (IOException)
                     {
-                        MessageBox.Show("Uh-oh, something went wrong. Please try closing all the PDF files you want to import", "Import error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Uh-oh, something went wrong. Please try closing all the PDF files you want to import", "Import error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
-                }
             };
+        }
 
-            return button;
+        protected virtual void OnRemoveFile(int index)
+        {
+            RemoveFile?.Invoke(index);
         }
 
         internal void SetFileName(string filename)
