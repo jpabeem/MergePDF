@@ -110,6 +110,11 @@ namespace MergePDF
 
         private void AddMoreFiles_Click(object sender, EventArgs e)
         {
+            AddMoreFiles();
+        }
+
+        private void AddMoreFiles(bool selectFile = false)
+        {
             var selectorX = new PdfSelectorControl(panel1.Controls.Count - 1)
             {
                 Width = panel1.Width - 50
@@ -121,6 +126,11 @@ namespace MergePDF
             //Adding again will make it stick to bottom
             panel1.Controls.Add(saveControl);
             panel1.Controls.Add(addMoreFiles);
+
+            if (selectFile)
+            {
+                selectorX.OpenFileSelection();
+            }
         }
 
         private void richConsole_Enter(object sender, EventArgs e)
@@ -198,6 +208,11 @@ namespace MergePDF
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richConsole.Clear();
+        }
+
+        private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddMoreFiles(true);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
