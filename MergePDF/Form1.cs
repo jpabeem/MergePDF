@@ -23,7 +23,7 @@ namespace MergePDF
             this.DragDrop += new DragEventHandler(DragDrop_Handler);
         }
 
-       
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -58,7 +58,7 @@ namespace MergePDF
             var selector2 = new PdfSelectorControl(2);
             selector2.RemoveFile += Selector_RemoveFile;
             panel1.Controls.Add(selector2);
-            
+
 
             saveControl = new SaveOutputSelectorControl((val) => richConsole.AppendText(val));
             panel1.Controls.Add(saveControl);
@@ -110,6 +110,11 @@ namespace MergePDF
 
         private void AddMoreFiles_Click(object sender, EventArgs e)
         {
+            AddMoreFiles();
+        }
+
+        private void AddMoreFiles(bool selectFile = false)
+        {
             var selectorX = new PdfSelectorControl(panel1.Controls.Count - 1)
             {
                 Width = panel1.Width - 50
@@ -121,6 +126,11 @@ namespace MergePDF
             //Adding again will make it stick to bottom
             panel1.Controls.Add(saveControl);
             panel1.Controls.Add(addMoreFiles);
+
+            if (selectFile)
+            {
+                selectorX.OpenFileSelection();
+            }
         }
 
         private void richConsole_Enter(object sender, EventArgs e)
@@ -200,9 +210,24 @@ namespace MergePDF
             richConsole.Clear();
         }
 
+        private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddMoreFiles(true);
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About
+            {
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            about.ShowDialog(this);
         }
 
         private void btnClearAll_Click(object sender, EventArgs e)
@@ -254,7 +279,7 @@ namespace MergePDF
         }
 
         private PdfSelectorControl GetFirstEmptyPDFSelector()
-        { 
+        {
             PdfSelectorControl result = null;
 
             foreach (Control control in panel1.Controls)

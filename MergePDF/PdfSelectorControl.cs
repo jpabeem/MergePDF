@@ -54,6 +54,11 @@ namespace MergePDF
 
         public event Action<int> RemoveFile;
 
+        public void OpenFileSelection()
+        {
+            button.PerformClick();
+        }
+
         private void CreateCloseButton()
         {
             closeButton = new Button
